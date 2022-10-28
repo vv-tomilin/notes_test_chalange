@@ -1,6 +1,6 @@
 export const initialState = {
   noteIndexCurrent: 0,
-  serchTerm: '',
+  searchTerm: '',
 };
 
 const notesReducer = (state, action) => {
@@ -8,7 +8,7 @@ const notesReducer = (state, action) => {
     case 'SET_SEARCH_TERM':
       return {
         ...state,
-        serchTerm: action.payload,
+        searchTerm: action.payload,
       };
     default:
       return state;
