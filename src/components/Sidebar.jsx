@@ -1,12 +1,12 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import NotesContext from '../Context/NotesContext';
-
-import data from '../data.json';
+import { setAllNotes } from '../Context/notesActions';
 
 const Sidebar = () => {
-  const notes = data.data;
+  const notesContext = useContext(NotesContext);
+  const searchTerm = notesContext.state.searchTerm;
 
-  const searchTerm = useContext(NotesContext).state.searchTerm;
+  const notes = notesContext.state.notes;
 
   const isFilterNote = (element) => {
     return element.toLowerCase().replaceAll('\n', '').includes(searchTerm.toLowerCase());

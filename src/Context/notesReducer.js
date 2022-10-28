@@ -1,4 +1,5 @@
 export const initialState = {
+  notes: [],
   noteIndexCurrent: 0,
   searchTerm: '',
 };
@@ -9,6 +10,16 @@ const notesReducer = (state, action) => {
       return {
         ...state,
         searchTerm: action.payload,
+      };
+    case 'SET_NEW_NOTE':
+      return {
+        ...state,
+        notes: action.payload,
+      };
+    case 'SET_ALL_NOTES':
+      return {
+        ...state,
+        notes: action.payload,
       };
     default:
       return state;

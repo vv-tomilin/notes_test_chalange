@@ -4,3 +4,17 @@ export const setSearchTerm = (payload) => {
     payload,
   };
 };
+
+export const setNewNote = (payload) => {
+  return {
+    type: 'SET_NEW_NOTE',
+    payload,
+  };
+};
+
+export const setAllNotes = (payload) => {
+  return {
+    type: 'SET_ALL_NOTES',
+    payload,
+  };
+};
