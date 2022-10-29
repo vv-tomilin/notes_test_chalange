@@ -30,7 +30,7 @@ const Editor = ({ type }) => {
 
   const id = window.crypto.randomUUID();
   const [content, setContent] = useState('**Новая заметка**\n\n');
-  const title = content ? content.match(/\*(.+?)(?:\n|$)/g) ?? [0] : '';
+  const title = content ? content.match(/\*(.+?)(?:\n|$)/g) : '';
 
   const changeContent = (value) => {
     setContent(value);

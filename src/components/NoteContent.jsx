@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { Button, Modal } from 'antd';
 import ReactMarkdown from 'react-markdown';
-import { Button } from 'antd';
 
 import NotesContext from '../Context/NotesContext';
 import { setIsEditNote, setIsOpenNote } from '../Context/notesActions';
@@ -9,6 +9,8 @@ import ControllerDB from '../database/schema';
 
 const NoteContent = () => {
   const { removeFromDB } = new ControllerDB();
+
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
   const notesContext = useContext(NotesContext);
   const notes = notesContext.state.notes;
@@ -25,6 +27,14 @@ const NoteContent = () => {
     notesContext.notesDispatch(setIsOpenNote(false));
   };
 
+  const openConfirmationModal = () => {
+    setOpenConfirmModal(true);
+  };
+
+  const closeConfirmationModal = () => {
+    setOpenConfirmModal(false);
+  };
+
   const deleteNote = () => {
     removeFromDB(index);
     notesContext.notesDispatch(setIsOpenNote(false));
@@ -37,9 +47,16 @@ const NoteContent = () => {
       <Button type="primary" onClick={editNote}>
         Edit
       </Button>
-      <Button type="primary" danger onClick={deleteNote}>
+      <Button type="primary" danger onClick={openConfirmationModal}>
         Delete
       </Button>
+      <Modal
+        title="Delete note"
+        open={openConfirmModal}
+        onOk={deleteNote}
+        onCancel={closeConfirmationModal}>
+        <p>Do you really want to delete the note?</p>
+      </Modal>
     </div>
   );
 };

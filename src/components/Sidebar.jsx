@@ -26,7 +26,7 @@ const Sidebar = () => {
           .filter((note) => {
             if (searchTerm === '') {
               return note;
-            } else if (isFilterNote(note.title) || isFilterNote(note.content)) {
+            } else if (isFilterNote(note.title[0]) || isFilterNote(note.content)) {
               return note;
             }
           })
