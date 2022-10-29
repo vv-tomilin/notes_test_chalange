@@ -26,6 +26,13 @@ export const setIsOpenNote = (payload) => {
   };
 };
 
+export const setIsEditNote = (payload) => {
+  return {
+    type: 'SET_IS_EDIT_NOTE',
+    payload,
+  };
+};
+
 export const setAllNotes = (payload) => {
   return {
     type: 'SET_ALL_NOTES',

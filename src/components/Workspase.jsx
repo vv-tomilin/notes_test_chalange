@@ -10,6 +10,7 @@ import { setSearchTerm, setIsOpenNote } from '../Context/notesActions';
 const Workspase = () => {
   const notesContext = useContext(NotesContext);
   const isOpenNote = notesContext.state.isOpenNote;
+  const isEditNote = notesContext.state.isEditNote;
 
   const [isNewNoteCreate, setIsNewNoteCreate] = useState(false);
 
@@ -23,15 +24,14 @@ const Workspase = () => {
     setIsNewNoteCreate(true);
   };
 
-  console.log('IS_OPEN = ', isOpenNote);
-
   return (
     <>
       <Search placeholder="Search..." onChange={handleSearch} />
       <Button onClick={createNewNote} type="primary">
         New Note
       </Button>
-      {isNewNoteCreate && !isOpenNote && <Editor type="new" />}
+      {isNewNoteCreate && !isOpenNote && !isEditNote && <Editor type="new" />}
+      {isEditNote && !isOpenNote && <Editor type="edit" />}
       {isOpenNote && <NoteContent />}
     </>
   );

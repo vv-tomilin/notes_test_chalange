@@ -3,6 +3,7 @@ export const initialState = {
   currentIndex: 0,
   searchTerm: '',
   isOpenNote: false,
+  isEditNote: false,
 };
 
 const notesReducer = (state, action) => {
@@ -26,6 +27,11 @@ const notesReducer = (state, action) => {
       return {
         ...state,
         isOpenNote: action.payload,
+      };
+    case 'SET_IS_EDIT_NOTE':
+      return {
+        ...state,
+        isEditNote: action.payload,
       };
     case 'SET_ALL_NOTES':
       return {
