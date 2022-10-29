@@ -13,9 +13,11 @@ import {
 } from '../../Context/notesActions';
 import NotesContext from '../../Context/NotesContext';
 
-import { db } from '../../database/db';
+import ControllerDB from '../../database/schema';
 
 const Editor = ({ type }) => {
+  const { addNewNoteToDB, updateNoteToDB } = new ControllerDB();
+
   const notesContext = useContext(NotesContext);
   const currentState = notesContext.state;
   const currentIndex = notesContext.state.currentIndex;
@@ -26,8 +28,6 @@ const Editor = ({ type }) => {
     }
   })[0];
 
-  console.log(editingNote);
-
   const id = window.crypto.randomUUID();
   const [content, setContent] = useState('**Новая заметка**\n\n');
   const title = content ? content.match(/\*(.+?)(?:\n|$)/g) ?? [0] : '';
@@ -37,14 +37,14 @@ const Editor = ({ type }) => {
   };
 
   const createNewNote = () => {
-    db.notes.add({ id, title, content });
+    addNewNoteToDB({ id, title, content });
     notesContext.notesDispatch(setNewNote([...currentState.notes, { id, title, content }]));
     notesContext.notesDispatch(setCurrentIndex(id));
     notesContext.notesDispatch(setIsOpenNote(true));
   };
 
   const saveEditedNote = () => {
-    db.notes.update(currentIndex, { title, content });
+    updateNoteToDB(currentIndex, { title, content });
     notesContext.notesDispatch(setCurrentIndex(currentIndex));
     notesContext.notesDispatch(setIsOpenNote(true));
   };

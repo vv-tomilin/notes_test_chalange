@@ -10,12 +10,13 @@ import Sidebar from './components/Sidebar';
 
 import 'antd/dist/antd.css';
 
-import data from './data.json';
-import { db } from './database/db';
+import ControllerDB from './database/schema';
 
-function App() {
+const App = () => {
+  const storage = new ControllerDB();
+
   const notesDb = useLiveQuery(() => {
-    return db.notes.toArray();
+    return storage.getAllNotesFromDB();
   });
 
   const [state, dispatch] = useReducer(notesReducer, initialState);
@@ -33,6 +34,6 @@ function App() {
       <Sidebar />
     </NotesContext.Provider>
   );
-}
+};
 
 export default App;
