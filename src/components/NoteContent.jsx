@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Card } from 'antd';
+import removeMd from 'remove-markdown';
 import ReactMarkdown from 'react-markdown';
 
 import NotesContext from '../Context/NotesContext';
@@ -41,15 +42,27 @@ const NoteContent = () => {
   };
 
   return (
-    <div style={{ border: '5px dashed red' }}>
-      <ReactMarkdown children={currentRenderNote.content} />
-      <div>{currentRenderNote.id}</div>
-      <Button type="primary" onClick={editNote}>
-        Edit
-      </Button>
-      <Button type="primary" danger onClick={openConfirmationModal}>
-        Delete
-      </Button>
+    <div style={{ margin: '25px' }}>
+      <Card title={removeMd(currentRenderNote.title[0])}>
+        <ReactMarkdown
+          children={
+            currentRenderNote.content.replace(currentRenderNote.title[0], '').slice(0, 30) + '...'
+          }
+        />
+        <div className="mt-55 flex-center">
+          <Button type="primary" onClick={editNote}>
+            Edit
+          </Button>
+          <Button
+            type="primary"
+            danger
+            onClick={openConfirmationModal}
+            style={{ marginLeft: '15px' }}>
+            Delete
+          </Button>
+        </div>
+      </Card>
+
       <Modal
         title="Delete note"
         open={openConfirmModal}

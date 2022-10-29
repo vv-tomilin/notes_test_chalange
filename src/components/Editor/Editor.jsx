@@ -29,6 +29,7 @@ const Editor = ({ type }) => {
   })[0];
 
   const id = window.crypto.randomUUID();
+  const createTime = Date.now();
   const [content, setContent] = useState('**Новая заметка**\n\n');
   const title = content ? content.match(/\*(.+?)(?:\n|$)/g) : '';
 
@@ -37,14 +38,16 @@ const Editor = ({ type }) => {
   };
 
   const createNewNote = () => {
-    addNewNoteToDB({ id, title, content });
-    notesContext.notesDispatch(setNewNote([...currentState.notes, { id, title, content }]));
+    addNewNoteToDB({ id, title, content, createTime });
+    notesContext.notesDispatch(
+      setNewNote([...currentState.notes, { id, title, content, createTime }])
+    );
     notesContext.notesDispatch(setCurrentIndex(id));
     notesContext.notesDispatch(setIsOpenNote(true));
   };
 
   const saveEditedNote = () => {
-    updateNoteToDB(currentIndex, { title, content });
+    updateNoteToDB(currentIndex, { title, content, createTime });
     notesContext.notesDispatch(setCurrentIndex(currentIndex));
     notesContext.notesDispatch(setIsOpenNote(true));
   };
@@ -59,9 +62,11 @@ const Editor = ({ type }) => {
       {type === 'new' && (
         <>
           <SimpleMDE value={content} options={options} onChange={changeContent} />
-          <Button type="primary" onClick={createNewNote}>
-            Create
-          </Button>
+          <div className='flex-right'>
+            <Button type="primary" onClick={createNewNote}>
+              Create
+            </Button>
+          </div>
         </>
       )}
       {type === 'edit' && (

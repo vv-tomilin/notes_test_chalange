@@ -4,6 +4,7 @@ export const initialState = {
   searchTerm: '',
   isOpenNote: false,
   isEditNote: false,
+  isNewNoteCreate: false,
 };
 
 const notesReducer = (state, action) => {
@@ -32,6 +33,11 @@ const notesReducer = (state, action) => {
       return {
         ...state,
         isEditNote: action.payload,
+      };
+    case 'SET_IS_NEW_NOTE_CREATE':
+      return {
+        ...state,
+        isNewNoteCreate: action.payload,
       };
     case 'SET_ALL_NOTES':
       return {

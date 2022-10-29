@@ -1,4 +1,7 @@
 import { useContext } from 'react';
+import { Card, Space } from 'antd';
+import ReactMarkdown from 'react-markdown';
+import removeMd from 'remove-markdown';
 
 import { setCurrentIndex, setIsOpenNote } from '../Context/notesActions';
 import NotesContext from '../Context/NotesContext';
@@ -14,13 +17,15 @@ const Sidebar = () => {
   };
 
   const openNoteContent = (id) => {
-    console.log('open', id);
     notesContext.notesDispatch(setCurrentIndex(id));
     notesContext.notesDispatch(setIsOpenNote(true));
   };
 
   return (
-    <div>
+    <Space
+      direction="vertical"
+      size="middle"
+      style={{ display: 'flex', height: '100vh', marginTop: '30px' }}>
       {notes &&
         notes
           .filter((note) => {
@@ -30,18 +35,23 @@ const Sidebar = () => {
               return note;
             }
           })
+          .sort((a, b) => b.createTime - a.createTime)
           .map((note) => {
             return (
-              <div
+              <Card
+                style={{ margin: '0 15px 15px' }}
+                title={removeMd(note.title[0])}
+                size="small"
                 onClick={() => openNoteContent(note.id)}
-                key={note.id}
-                style={{ margin: '10px', border: '2px solid black' }}>
-                <div>{note.title}</div>
-                <div>{note.content}</div>
-              </div>
+                key={note.id}>
+                <ReactMarkdown children={note.title} />
+                <ReactMarkdown
+                  children={note.content.replace(note.title, '').slice(0, 30) + '...'}
+                />
+              </Card>
             );
           })}
-    </div>
+    </Space>
   );
 };
 

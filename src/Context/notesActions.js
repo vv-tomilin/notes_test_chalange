@@ -33,6 +33,13 @@ export const setIsEditNote = (payload) => {
   };
 };
 
+export const setIsNewNoteCreate = (payload) => {
+  return {
+    type: 'SET_IS_NEW_NOTE_CREATE',
+    payload,
+  };
+};
+
 export const setAllNotes = (payload) => {
   return {
     type: 'SET_ALL_NOTES',

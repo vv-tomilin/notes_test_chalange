@@ -1,0 +1,38 @@
+.flex-right {
+  margin-top: 10px;
+
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.mt-55 {
+  margin-top: 55px;
+}
+
+/* W3C standard
+   сейчас только для Firefox */
+* {
+  scrollbar-width: 5px;
+  scrollbar-color: #545454;
+}
+
+/* для Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  height: 12px;
+  width: 9px;
+}
+*::-webkit-scrollbar-track {
+  background: #252525;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #545454;
+  border-radius: 15px;
+  border: 3px solid #252525;
+}

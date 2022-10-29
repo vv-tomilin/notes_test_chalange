@@ -3,7 +3,7 @@ import Dexie from 'dexie';
 export const db = new Dexie('notes');
 
 db.version(1).stores({
-  notes: '++sort, id, title, content',
+  notes: 'id, title, content, atCreate',
 });
 
 db.open();
