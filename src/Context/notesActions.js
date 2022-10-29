@@ -19,9 +19,9 @@ export const setCurrentIndex = (payload) => {
   };
 };
 
-export const setIsCreatedNote = (payload) => {
+export const setIsOpenNote = (payload) => {
   return {
-    type: 'SET_IS_CREATED_NOTE',
+    type: 'SET_IS_OPEN_NOTE',
     payload,
   };
 };

@@ -1,6 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
+
+import { setCurrentIndex, setIsOpenNote } from '../Context/notesActions';
 import NotesContext from '../Context/NotesContext';
-import { setAllNotes } from '../Context/notesActions';
 
 const Sidebar = () => {
   const notesContext = useContext(NotesContext);
@@ -10,6 +11,12 @@ const Sidebar = () => {
 
   const isFilterNote = (element) => {
     return element.toLowerCase().replaceAll('\n', '').includes(searchTerm.toLowerCase());
+  };
+
+  const openNoteContent = (id) => {
+    console.log('open', id);
+    notesContext.notesDispatch(setCurrentIndex(id));
+    notesContext.notesDispatch(setIsOpenNote(true));
   };
 
   return (
@@ -23,9 +30,12 @@ const Sidebar = () => {
               return note;
             }
           })
-          .map((note, index) => {
+          .map((note) => {
             return (
-              <div key={index} style={{ margin: '10px', border: '2px solid black' }}>
+              <div
+                onClick={() => openNoteContent(note.id)}
+                key={note.id}
+                style={{ margin: '10px', border: '2px solid black' }}>
                 <div>{note.title}</div>
                 <div>{note.content}</div>
               </div>

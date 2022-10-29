@@ -2,7 +2,7 @@ export const initialState = {
   notes: [],
   currentIndex: 0,
   searchTerm: '',
-  isCreatedNote: false,
+  isOpenNote: false,
 };
 
 const notesReducer = (state, action) => {
@@ -22,10 +22,10 @@ const notesReducer = (state, action) => {
         ...state,
         currentIndex: action.payload,
       };
-    case 'SET_IS_CREATED_NOTE':
+    case 'SET_IS_OPEN_NOTE':
       return {
         ...state,
-        isCreatedNote: action.payload,
+        isOpenNote: action.payload,
       };
     case 'SET_ALL_NOTES':
       return {

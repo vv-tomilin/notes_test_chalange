@@ -6,7 +6,7 @@ import options from './options';
 
 import { Button } from 'antd';
 
-import { setNewNote, setCurrentIndex, setIsCreatedNote } from '../../Context/notesActions';
+import { setNewNote, setCurrentIndex, setIsOpenNote } from '../../Context/notesActions';
 import NotesContext from '../../Context/NotesContext';
 
 const Editor = ({ type }) => {
@@ -24,7 +24,7 @@ const Editor = ({ type }) => {
   const createNewNote = () => {
     notesContext.notesDispatch(setNewNote([...currentState.notes, { id, title, content }]));
     notesContext.notesDispatch(setCurrentIndex(id));
-    notesContext.notesDispatch(setIsCreatedNote(true));
+    notesContext.notesDispatch(setIsOpenNote(true));
   };
 
   return (
