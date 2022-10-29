@@ -6,13 +6,14 @@ import options from './options';
 
 import { Button } from 'antd';
 
-import { setNewNote } from '../../Context/notesActions';
+import { setNewNote, setCurrentIndex, setIsCreatedNote } from '../../Context/notesActions';
 import NotesContext from '../../Context/NotesContext';
 
 const Editor = ({ type }) => {
   const notesContext = useContext(NotesContext);
   const currentState = notesContext.state;
 
+  const id = window.crypto.randomUUID();
   const [content, setContent] = useState('**Новая заметка**\n\n');
   const title = content ? content.match(/\*(.+?)(?:\n|$)/g)[0] : '';
 
@@ -21,9 +22,9 @@ const Editor = ({ type }) => {
   };
 
   const createNewNote = () => {
-    notesContext.notesDispatch(
-      setNewNote([...currentState.notes, { id: window.crypto.randomUUID(), title, content }])
-    );
+    notesContext.notesDispatch(setNewNote([...currentState.notes, { id, title, content }]));
+    notesContext.notesDispatch(setCurrentIndex(id));
+    notesContext.notesDispatch(setIsCreatedNote(true));
   };
 
   return (

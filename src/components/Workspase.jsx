@@ -2,12 +2,14 @@ import { useContext, useState } from 'react';
 import { Button, Input as Search } from 'antd';
 
 import Editor from './Editor/Editor';
+import NoteContent from './NoteContent';
 
 import NotesContext from '../Context/NotesContext';
-import { setSearchTerm } from '../Context/notesActions';
+import { setSearchTerm, setIsCreatedNote } from '../Context/notesActions';
 
 const Workspase = () => {
   const notesContext = useContext(NotesContext);
+  const isCreated = notesContext.state.isCreatedNote;
 
   const [isNewNoteCreate, setIsNewNoteCreate] = useState(false);
 
@@ -17,6 +19,7 @@ const Workspase = () => {
   };
 
   const createNewNote = () => {
+    notesContext.notesDispatch(setIsCreatedNote(false));
     setIsNewNoteCreate(true);
   };
 
@@ -26,7 +29,8 @@ const Workspase = () => {
       <Button onClick={createNewNote} type="primary">
         New Note
       </Button>
-      {isNewNoteCreate && <Editor type="new" />}
+      {isNewNoteCreate && !isCreated && <Editor type="new" />}
+      {isCreated && <NoteContent />}
     </>
   );
 };

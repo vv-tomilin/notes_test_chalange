@@ -1,7 +1,8 @@
 export const initialState = {
   notes: [],
-  noteIndexCurrent: 0,
+  currentIndex: 0,
   searchTerm: '',
+  isCreatedNote: false,
 };
 
 const notesReducer = (state, action) => {
@@ -15,6 +16,16 @@ const notesReducer = (state, action) => {
       return {
         ...state,
         notes: action.payload,
+      };
+    case 'SET_CURRENT_INDEX':
+      return {
+        ...state,
+        currentIndex: action.payload,
+      };
+    case 'SET_IS_CREATED_NOTE':
+      return {
+        ...state,
+        isCreatedNote: action.payload,
       };
     case 'SET_ALL_NOTES':
       return {

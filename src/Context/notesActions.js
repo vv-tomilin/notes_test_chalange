@@ -12,6 +12,20 @@ export const setNewNote = (payload) => {
   };
 };
 
+export const setCurrentIndex = (payload) => {
+  return {
+    type: 'SET_CURRENT_INDEX',
+    payload,
+  };
+};
+
+export const setIsCreatedNote = (payload) => {
+  return {
+    type: 'SET_IS_CREATED_NOTE',
+    payload,
+  };
+};
+
 export const setAllNotes = (payload) => {
   return {
     type: 'SET_ALL_NOTES',
