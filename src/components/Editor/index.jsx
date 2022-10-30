@@ -21,7 +21,6 @@ const Editor = ({ type }) => {
   const notesContext = useContext(NotesContext);
   const currentState = notesContext.state;
   const currentIndex = notesContext.state.currentIndex;
-
   const editingNote = currentState.notes.filter((note) => {
     if (note.id === currentIndex) {
       return note.content;
