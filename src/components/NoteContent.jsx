@@ -31,6 +31,7 @@ const NoteContent = () => {
     removeFromDB(index);
     notesContext.notesDispatch(setIsOpenNote(false));
     notesContext.notesDispatch(setIsNewNoteCreate(false));
+    notesContext.notesDispatch(setIsEditNote(false));
   };
 
   const openConfirmationModal = () => {
