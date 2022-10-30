@@ -4,7 +4,7 @@ import removeMd from 'remove-markdown';
 import ReactMarkdown from 'react-markdown';
 
 import NotesContext from '../Context/NotesContext';
-import { setIsEditNote, setIsOpenNote } from '../Context/notesActions';
+import { setIsEditNote, setIsOpenNote, setIsNewNoteCreate } from '../Context/notesActions';
 
 import ControllerDB from '../database/ControllerDB';
 
@@ -27,17 +27,18 @@ const NoteContent = () => {
     notesContext.notesDispatch(setIsOpenNote(false));
   };
 
+  const deleteNote = () => {
+    removeFromDB(index);
+    notesContext.notesDispatch(setIsOpenNote(false));
+    notesContext.notesDispatch(setIsNewNoteCreate(false));
+  };
+
   const openConfirmationModal = () => {
     setOpenConfirmModal(true);
   };
 
   const closeConfirmationModal = () => {
     setOpenConfirmModal(false);
-  };
-
-  const deleteNote = () => {
-    removeFromDB(index);
-    notesContext.notesDispatch(setIsOpenNote(false));
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useState, useContext, useMemo, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Button } from 'antd';
 
 import SimpleMDE from 'react-simplemde-editor';
