@@ -28,7 +28,7 @@ const Editor = ({ type }) => {
     }
   })[0];
 
-  const [content, setContent] = useState('**Новая заметка**\n\n');
+  const [content, setContent] = useState('**New note**\n\n');
   const title = content ? content.match(/\*(.+?)(?:\n|$)/g) : '';
   const id = window.crypto.randomUUID();
   const createTime = Date.now();
