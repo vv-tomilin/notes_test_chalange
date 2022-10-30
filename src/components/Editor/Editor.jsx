@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useMemo, useEffect } from 'react';
 import { Button } from 'antd';
 
 import SimpleMDE from 'react-simplemde-editor';
@@ -18,13 +18,17 @@ import ControllerDB from '../../database/schema';
 const Editor = ({ type }) => {
   const { addNewNoteToDB, updateNoteToDB } = new ControllerDB();
 
+  const editorOptions = useMemo(() => {
+    return options;
+  }, []);
+
   const notesContext = useContext(NotesContext);
   const currentState = notesContext.state;
   const currentIndex = notesContext.state.currentIndex;
 
   const editingNote = currentState.notes.filter((note) => {
     if (note.id === currentIndex) {
-      return note;
+      return note.content;
     }
   })[0];
 
@@ -37,6 +41,18 @@ const Editor = ({ type }) => {
     setContent(value);
   };
 
+  useEffect(() => {
+    if (type === 'edit' && editingNote?.content) {
+      setContent(editingNote.content);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (type === 'edit') {
+      updateNoteToDB(currentIndex, { title, content, createTime });
+    }
+  }, [content]);
+
   const createNewNote = () => {
     addNewNoteToDB({ id, title, content, createTime });
     notesContext.notesDispatch(
@@ -46,11 +62,7 @@ const Editor = ({ type }) => {
     notesContext.notesDispatch(setIsOpenNote(true));
   };
 
-  const saveEditedNote = () => {
-    updateNoteToDB(currentIndex, { title, content, createTime });
-    notesContext.notesDispatch(setCurrentIndex(currentIndex));
-    notesContext.notesDispatch(setIsOpenNote(true));
-  };
+  const saveEditedNote = () => {};
 
   const cancelEdit = () => {
     notesContext.notesDispatch(setIsEditNote(false));
@@ -61,8 +73,8 @@ const Editor = ({ type }) => {
     <div>
       {type === 'new' && (
         <>
-          <SimpleMDE value={content} options={options} onChange={changeContent} />
-          <div className='flex-right'>
+          <SimpleMDE value={content} options={editorOptions} onChange={changeContent} />
+          <div className="flex-right">
             <Button type="primary" onClick={createNewNote}>
               Create
             </Button>
@@ -71,7 +83,7 @@ const Editor = ({ type }) => {
       )}
       {type === 'edit' && (
         <>
-          <SimpleMDE value={editingNote.content} options={options} onChange={changeContent} />
+          <SimpleMDE value={content} options={options} onChange={changeContent} />
           <Button type="primary" onClick={saveEditedNote}>
             Save
           </Button>

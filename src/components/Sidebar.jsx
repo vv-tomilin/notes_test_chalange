@@ -40,13 +40,15 @@ const Sidebar = () => {
             return (
               <Card
                 style={{ margin: '0 15px 15px' }}
-                title={removeMd(note.title[0])}
+                title={note.title ? removeMd(note.title[0]) : 'Без заголовка'}
                 size="small"
                 onClick={() => openNoteContent(note.id)}
                 key={note.id}>
                 <ReactMarkdown children={note.title} />
                 <ReactMarkdown
-                  children={note.content.replace(note.title, '').slice(0, 30) + '...'}
+                  children={
+                    note.content ? note.content.replace(note.title, '').slice(0, 30) + '...' : ''
+                  }
                 />
               </Card>
             );

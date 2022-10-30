@@ -43,12 +43,18 @@ const NoteContent = () => {
 
   return (
     <div style={{ margin: '25px' }}>
-      <Card title={removeMd(currentRenderNote.title[0])}>
+      <Card
+        title={
+          currentRenderNote.title || '' ? removeMd(currentRenderNote.title[0]) : 'Без заголовка'
+        }>
         <ReactMarkdown
           children={
-            currentRenderNote.content.replace(currentRenderNote.title[0], '').slice(0, 30) + '...'
+            currentRenderNote.content
+              ? currentRenderNote.content.replace(currentRenderNote.title, '')
+              : ''
           }
         />
+
         <div className="mt-55 flex-center">
           <Button type="primary" onClick={editNote}>
             Edit
