@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import NotesContext from '../Context/NotesContext';
 import { setIsEditNote, setIsOpenNote } from '../Context/notesActions';
 
-import ControllerDB from '../database/schema';
+import ControllerDB from '../database/ControllerDB';
 
 const NoteContent = () => {
   const { removeFromDB } = new ControllerDB();
@@ -16,7 +16,6 @@ const NoteContent = () => {
   const notesContext = useContext(NotesContext);
   const notes = notesContext.state.notes;
   const index = notesContext.state.currentIndex;
-
   const currentRenderNote = notes.filter((note) => {
     if (note.id === index) {
       return note;

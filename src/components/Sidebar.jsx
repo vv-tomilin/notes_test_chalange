@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { Card, Space } from 'antd';
 import ReactMarkdown from 'react-markdown';
 import removeMd from 'remove-markdown';
+import { siderItem, selectSiderItem } from '../styles/sider/cardStyles';
 
 import { setCurrentIndex, setIsOpenNote } from '../Context/notesActions';
 import NotesContext from '../Context/NotesContext';
@@ -9,8 +10,8 @@ import NotesContext from '../Context/NotesContext';
 const Sidebar = () => {
   const notesContext = useContext(NotesContext);
   const searchTerm = notesContext.state.searchTerm;
-
   const notes = notesContext.state.notes;
+  const currentIndex = notesContext.state.currentIndex;
 
   const isFilterNote = (element) => {
     return element.toLowerCase().replaceAll('\n', '').includes(searchTerm.toLowerCase());
@@ -39,7 +40,7 @@ const Sidebar = () => {
           .map((note) => {
             return (
               <Card
-                style={{ margin: '0 15px 15px' }}
+                style={currentIndex === note.id ? selectSiderItem : siderItem}
                 title={note.title ? removeMd(note.title[0]) : 'Без заголовка'}
                 size="small"
                 onClick={() => openNoteContent(note.id)}
@@ -47,7 +48,10 @@ const Sidebar = () => {
                 <ReactMarkdown children={note.title} />
                 <ReactMarkdown
                   children={
-                    note.content ? note.content.replace(note.title, '').slice(0, 30) + '...' : ''
+                    note.content
+                      ? note.content.replace(note.title, '').slice(0, 25).replaceAll('\n', '') +
+                        '...'
+                      : ''
                   }
                 />
               </Card>

@@ -13,15 +13,15 @@ import ToolBar from './components/ToolBar';
 import 'antd/dist/antd.css';
 import './styles/main.css';
 
-import ControllerDB from './database/schema';
+import ControllerDB from './database/ControllerDB';
 
 const { Header, Content, Sider } = Layout;
 
 const App = () => {
-  const storage = new ControllerDB();
+  const { getAllNotesFromDB } = new ControllerDB();
 
   const notesDb = useLiveQuery(() => {
-    return storage.getAllNotesFromDB();
+    return getAllNotesFromDB();
   });
 
   const [state, dispatch] = useReducer(notesReducer, initialState);

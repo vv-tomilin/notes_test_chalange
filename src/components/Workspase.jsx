@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Space } from 'antd';
 
-import Editor from './Editor/Editor';
+import Editor from './Editor';
 import NoteContent from './NoteContent';
 
 import NotesContext from '../Context/NotesContext';
@@ -17,6 +17,9 @@ const Workspase = () => {
       {isNewNoteCreate && !isOpenNote && !isEditNote && <Editor type="new" />}
       {isEditNote && !isOpenNote && <Editor type="edit" />}
       {isOpenNote && <NoteContent />}
+      {!isNewNoteCreate && !isEditNote && !isOpenNote && (
+        <div className="prymary-text centring-all">Select note or create new note...</div>
+      )}
     </Space>
   );
 };

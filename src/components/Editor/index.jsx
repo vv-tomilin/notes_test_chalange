@@ -13,14 +13,10 @@ import {
 } from '../../Context/notesActions';
 import NotesContext from '../../Context/NotesContext';
 
-import ControllerDB from '../../database/schema';
+import ControllerDB from '../../database/ControllerDB';
 
 const Editor = ({ type }) => {
   const { addNewNoteToDB, updateNoteToDB } = new ControllerDB();
-
-  const editorOptions = useMemo(() => {
-    return options;
-  }, []);
 
   const notesContext = useContext(NotesContext);
   const currentState = notesContext.state;
@@ -32,14 +28,10 @@ const Editor = ({ type }) => {
     }
   })[0];
 
-  const id = window.crypto.randomUUID();
-  const createTime = Date.now();
   const [content, setContent] = useState('**Новая заметка**\n\n');
   const title = content ? content.match(/\*(.+?)(?:\n|$)/g) : '';
-
-  const changeContent = (value) => {
-    setContent(value);
-  };
+  const id = window.crypto.randomUUID();
+  const createTime = Date.now();
 
   useEffect(() => {
     if (type === 'edit' && editingNote?.content) {
@@ -53,6 +45,10 @@ const Editor = ({ type }) => {
     }
   }, [content]);
 
+  const changeContent = (value) => {
+    setContent(value);
+  };
+
   const createNewNote = () => {
     addNewNoteToDB({ id, title, content, createTime });
     notesContext.notesDispatch(
@@ -62,9 +58,7 @@ const Editor = ({ type }) => {
     notesContext.notesDispatch(setIsOpenNote(true));
   };
 
-  const saveEditedNote = () => {};
-
-  const cancelEdit = () => {
+  const closeEditedNote = () => {
     notesContext.notesDispatch(setIsEditNote(false));
     notesContext.notesDispatch(setIsOpenNote(true));
   };
@@ -73,8 +67,8 @@ const Editor = ({ type }) => {
     <div>
       {type === 'new' && (
         <>
-          <SimpleMDE value={content} options={editorOptions} onChange={changeContent} />
-          <div className="flex-right">
+          <SimpleMDE value={content} options={options} onChange={changeContent} />
+          <div className="flex-center">
             <Button type="primary" onClick={createNewNote}>
               Create
             </Button>
@@ -84,12 +78,11 @@ const Editor = ({ type }) => {
       {type === 'edit' && (
         <>
           <SimpleMDE value={content} options={options} onChange={changeContent} />
-          <Button type="primary" onClick={saveEditedNote}>
-            Save
-          </Button>
-          <Button type="dashed" onClick={cancelEdit}>
-            Cancel
-          </Button>
+          <div className="flex-center">
+            <Button type="primary" onClick={closeEditedNote}>
+              OK
+            </Button>
+          </div>
         </>
       )}
     </div>
